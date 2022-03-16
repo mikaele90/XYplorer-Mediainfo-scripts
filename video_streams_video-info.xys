@@ -1,0 +1,25 @@
+if (strpos(get("genericfiletype", "{:Video}"), "*.<cc_ext>") != -1) {
+	$mediaInfo			= "C:\Program Files\MediaInfo_CLI_21.03\MediaInfo.exe";
+	$result				= trim(runret("""$mediaInfo"" --Inform=""file://C:/Program Files/MediaInfo_CLI_21.03/scripts/stream_format_video-only.txt"" ""<cc_item>""", , 65001), <crlf>, "R");
+	$video       		= gettoken($result, 1, <crlf>);
+
+	//Video info
+	$vDimensions 		= gettoken($video, 1, "::");
+	$vFormat     		= gettoken($video, 2, "::");
+	$vBitRate			= gettoken($video, 3, "::");
+	$vBitRateMode		= gettoken($video, 4, "::");
+	if ($vBitRateMode == " ()") {
+		$vBitRateMode = "";
+	}
+	$vFrameRate			= gettoken($video, 5, "::");
+	$vFrameRateMode		= gettoken($video, 6, "::");
+	if ($vFrameRateMode == " ()") {
+		$vFrameRateMode = "";
+	}
+	$vStreamSize		= gettoken($video, 7, "::");
+	$vBitDepth			= gettoken($video, 8, "::");
+	$vChromaSubsampling	= gettoken($video, 9, "::");
+	
+	$vString			= "$vDimensions, $vFormat$vBitDepth$vChromaSubsampling, $vBitRate$vBitRateMode, $vFrameRate$vFrameRateMode, $vStreamSize";
+	return $vString;
+}

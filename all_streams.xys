@@ -1,0 +1,58 @@
+//Image(s)
+if (strpos(get("genericfiletype", "{:Image}"), "*.<cc_ext>") != -1) {
+	return property("#image.dimensions", <cc_item>);
+
+// Video(s)
+} elseif (strpos(get("genericfiletype", "{:Video}"), "*.<cc_ext>") != -1) {
+	$mediaInfo			= "C:\Program Files\MediaInfo_CLI_21.03\MediaInfo.exe";
+	$result				= trim(runret("""$mediaInfo"" --Inform=""file://C:/Program Files/MediaInfo_CLI_21.03/scripts/stream_format.txt"" ""<cc_item>""", , 65001), <crlf>, "R");
+	$general     		= gettoken($result, 1, <crlf>);
+	$video       		= gettoken($result, 2, <crlf>);
+	$audio       		= gettoken($result, 3, <crlf>);
+	
+	//General info
+	$gDuration			= gettoken($general, 1, "::");
+	$gFileSize			= gettoken($general, 2, "::");
+	$gOverallBitRate	= gettoken($general, 3, "::");
+	//Video info
+	$vDimensions 		= gettoken($video, 1, "::");
+	$vFormat     		= gettoken($video, 2, "::");
+	$vBitRate			= gettoken($video, 3, "::");
+	$vBitRateMode		= gettoken($video, 4, "::");
+	if ($vBitRateMode == " ()") {
+		$vBitRateMode = "";
+	}
+	$vFrameRate			= gettoken($video, 5, "::");
+	$vFrameRateMode		= gettoken($video, 6, "::");
+	if ($vFrameRateMode == " ()") {
+		$vFrameRateMode = "";
+	}
+	$vStreamSize		= gettoken($video, 7, "::");
+	$vBitDepth			= gettoken($video, 8, "::");
+	$vChromaSubsampling	= gettoken($video, 9, "::");
+	//Audio info
+	$aChannels			= gettoken($audio, 1, "::");
+	$aFormat			= gettoken($audio, 2, "::");
+	$aBitRate			= gettoken($audio, 3, "::");
+	$aBitRateMode		= gettoken($audio, 4, "::");
+	if ($aBitRateMode == " ()") {
+		$aBitRateMode = "";
+	}
+	$aSamplingRate		= gettoken($audio, 5, "::");
+	$aStreamSize		= gettoken($audio, 6, "::");
+	
+	
+	$gStartString		= "General:";
+	$vStartString		= "Video:";
+	$aStartString		= "Audio:";
+	
+	
+	$gString			= "$gStartString $gDuration, $gFileSize, $gOverallBitRate |";
+	$vString			= "$vStartString $vDimensions, $vFormat$vBitDepth$vChromaSubsampling, $vBitRate$vBitRateMode, $vFrameRate$vFrameRateMode, $vStreamSize |";
+	$aString			= "$aStartString $aChannels$aFormat, $aBitRate$aBitRateMode, $aSamplingRate, $aStreamSize";
+
+
+	$output      		= "$gString $vString $aString";
+	$output      		= replace($output, " channels", "x");
+	return $output;
+}
