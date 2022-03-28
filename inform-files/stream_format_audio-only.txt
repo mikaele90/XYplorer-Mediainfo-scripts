@@ -1,0 +1,1 @@
+Audio;%Channel(s)/String%::%Format%::%BitRate/String%:: (%BitRate_Mode%)::%SamplingRate/String%::%StreamSize/String%\r\n

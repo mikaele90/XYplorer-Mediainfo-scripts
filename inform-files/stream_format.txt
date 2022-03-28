@@ -1,0 +1,3 @@
+General;%Duration/String%::%FileSize/String%::%OverallBitRate/String%\r\n
+Video;%Width%x%Height%::%Format%%Encoded_Library_Name%::%BitRate/String%:: (%BitRate_Mode%)::%FrameRate%:: (%FrameRate_Mode%)::%StreamSize/String%:: (%BitDepth% bits, ::%ChromaSubsampling%)\r\n
+Audio;%Channel(s)/String%::%Format%::%BitRate/String%:: (%BitRate_Mode%)::%SamplingRate/String%::%StreamSize/String%\r\n

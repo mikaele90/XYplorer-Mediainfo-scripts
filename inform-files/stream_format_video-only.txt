@@ -1,0 +1,1 @@
+Video;%Width%x%Height%::%Format%%Encoded_Library_Name%::%BitRate/String%:: (%BitRate_Mode%)::%FrameRate%:: (%FrameRate_Mode%)::%StreamSize/String%:: (%BitDepth% bits, ::%ChromaSubsampling%)\r\n

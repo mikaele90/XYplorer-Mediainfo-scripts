@@ -1,0 +1,1 @@
+General;%Duration/String%::%FileSize/String%::%OverallBitRate/String%\r\n
